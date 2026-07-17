@@ -9,10 +9,7 @@ import { TeamLayout } from "@/components/shared/TeamLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  primaryGradientButton,
-  primaryGradientIconCircle,
-} from "@/lib/styles";
+import { primaryGradientButton, primaryGradientIconCircle } from "@/lib/styles";
 import { formSelectClass } from "@/lib/styles";
 import type { ClientDto, TeamDto, VehicleDto } from "@/services/types";
 

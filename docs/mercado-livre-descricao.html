@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -17,15 +17,23 @@
         --ok: #166534;
         --cta: #ea580c;
       }
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
         background: var(--bg);
         color: var(--text);
         line-height: 1.5;
       }
-      .wrap { max-width: 920px; margin: 0 auto; padding: 24px 16px 48px; }
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
       .header {
         background: linear-gradient(135deg, #1e3a8a, #1d4ed8 55%, #ea580c);
         color: #fff;
@@ -33,8 +41,14 @@
         padding: 24px;
         margin-bottom: 20px;
       }
-      .header h1 { margin: 0 0 8px; font-size: 1.5rem; }
-      .header p { margin: 0; opacity: 0.92; }
+      .header h1 {
+        margin: 0 0 8px;
+        font-size: 1.5rem;
+      }
+      .header p {
+        margin: 0;
+        opacity: 0.92;
+      }
       .card {
         background: var(--card);
         border: 1px solid var(--border);
@@ -42,9 +56,21 @@
         padding: 20px;
         margin-bottom: 16px;
       }
-      .card h2 { margin: 0 0 12px; font-size: 1.1rem; }
-      .note { color: var(--muted); font-size: 0.95rem; margin: 0 0 16px; }
-      .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 1.1rem;
+      }
+      .note {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin: 0 0 16px;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
       button {
         border: 0;
         border-radius: 10px;
@@ -53,10 +79,23 @@
         font-weight: 600;
         cursor: pointer;
       }
-      .btn-primary { background: var(--accent); color: #fff; }
-      .btn-primary:hover { background: var(--accent-hover); }
-      .btn-secondary { background: #dbeafe; color: var(--accent); }
-      .status { min-height: 1.25rem; font-size: 0.9rem; color: var(--ok); margin-bottom: 12px; }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+      .btn-secondary {
+        background: #dbeafe;
+        color: var(--accent);
+      }
+      .status {
+        min-height: 1.25rem;
+        font-size: 0.9rem;
+        color: var(--ok);
+        margin-bottom: 12px;
+      }
       textarea {
         width: 100%;
         min-height: 720px;
@@ -70,8 +109,12 @@
         color: var(--text);
         background: #fcfcfd;
       }
-      .title-box { min-height: 72px; }
-      .short { min-height: 120px; }
+      .title-box {
+        min-height: 72px;
+      }
+      .short {
+        min-height: 120px;
+      }
     </style>
   </head>
   <body>
@@ -84,24 +127,34 @@
       <div class="card">
         <h2>Título sugerido</h2>
         <div class="actions">
-          <button class="btn-primary" type="button" data-copy-target="titulo">Copiar título</button>
+          <button class="btn-primary" type="button" data-copy-target="titulo">
+            Copiar título
+          </button>
         </div>
-        <textarea id="titulo" class="title-box" readonly>Oficina Pro Desktop - Sistema Oficina Mecânica OS Estoque Clientes Offline</textarea>
+        <textarea id="titulo" class="title-box" readonly>
+Oficina Pro Desktop - Sistema Oficina Mecânica OS Estoque Clientes Offline</textarea>
       </div>
 
       <div class="card">
         <h2>Resumo curto</h2>
         <div class="actions">
-          <button class="btn-primary" type="button" data-copy-target="resumo">Copiar resumo</button>
+          <button class="btn-primary" type="button" data-copy-target="resumo">
+            Copiar resumo
+          </button>
         </div>
-        <textarea id="resumo" class="short" readonly>Oficina Pro Desktop - software para oficina mecânica com ordem de serviço, clientes, veículos, peças e estoque. 100% offline, pagamento único, sem mensalidade. Funciona em Windows, Mac e Linux.</textarea>
+        <textarea id="resumo" class="short" readonly>
+Oficina Pro Desktop - software para oficina mecânica com ordem de serviço, clientes, veículos, peças e estoque. 100% offline, pagamento único, sem mensalidade. Funciona em Windows, Mac e Linux.</textarea>
       </div>
 
       <div class="card">
         <h2>Descrição completa</h2>
         <div class="actions">
-          <button class="btn-primary" type="button" id="copy-all">Copiar descrição completa</button>
-          <button class="btn-secondary" type="button" id="select-all">Selecionar tudo</button>
+          <button class="btn-primary" type="button" id="copy-all">
+            Copiar descrição completa
+          </button>
+          <button class="btn-secondary" type="button" id="select-all">
+            Selecionar tudo
+          </button>
         </div>
         <div class="status" id="status" aria-live="polite"></div>
         <textarea id="descricao" readonly>
@@ -149,8 +202,6 @@ Catálogo e estoque
 - Serviços de mão de obra com preço e tempo estimado
 - Peças com SKU, código de barras, custo, preço e estoque mínimo
 - Entrada, saída, ajuste e transferência entre locais
-- Consulta por QR Code / código de barras
-- Etiquetas em PDF para peças
 
 Relatórios e backup
 - Indicadores de estoque
@@ -185,7 +236,6 @@ REQUISITOS
 - 4 GB de RAM (recomendado 8 GB)
 - Windows 10/11 64 bits, macOS 11+, ou Linux 64 bits com interface gráfica
 - Espaço em disco para instalação
-- Opcional: impressora para etiquetas e leitor de código de barras
 
 
 IMPORTANTE
@@ -229,9 +279,13 @@ Organize clientes, veículos, OS e estoque em um único sistema offline, com vis
         setTimeout(() => (status.textContent = ""), 1500);
       }
       document.querySelectorAll("[data-copy-target]").forEach((btn) => {
-        btn.addEventListener("click", () => copyText(btn.getAttribute("data-copy-target")));
+        btn.addEventListener("click", () =>
+          copyText(btn.getAttribute("data-copy-target"))
+        );
       });
-      document.getElementById("copy-all").addEventListener("click", () => copyText("descricao"));
+      document
+        .getElementById("copy-all")
+        .addEventListener("click", () => copyText("descricao"));
       document.getElementById("select-all").addEventListener("click", () => {
         const el = document.getElementById("descricao");
         el.focus();

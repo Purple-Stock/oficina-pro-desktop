@@ -197,8 +197,7 @@ const translations = {
       uploadQRImage: "Upload QR image",
       barcodeInput: "Barcode/QR code",
       barcodePlaceholder: "Enter barcode or scan",
-      scannerHint:
-        "You can enter a code manually or use the camera to scan.",
+      scannerHint: "You can enter a code manually or use the camera to scan.",
       itemFound: "Item found",
       itemNotFound: "Item not found",
       itemAddedToList: "has been added to the list.",
@@ -307,11 +306,13 @@ const translations = {
       reviewTransferImpact: "Review the impact of the team transfer",
       transferSummaryToTeamPrefix: "to team",
       noItemsSelected: "No items selected",
-      selectLocationsFirst: "Please select both source and destination locations",
+      selectLocationsFirst:
+        "Please select both source and destination locations",
       quantityRequired: "Quantity is required",
       quantityExceedsStock: "Quantity cannot exceed current stock",
       stockMovedSuccess: "Stock moved successfully",
-      stockTransferredTeamSuccess: "Stock transferred between teams successfully",
+      stockTransferredTeamSuccess:
+        "Stock transferred between teams successfully",
       itemFound: "Item found",
       itemNotFound: "Item not found",
       itemAddedToList: "has been added to the list.",
@@ -864,7 +865,8 @@ const translations = {
         "Crie o item sem sair desta tela e continue a entrada em seguida.",
       createItemSuccessAndAdded:
         "Item criado e adicionado à entrada com quantidade 1.",
-      cameraError: "Não foi possível acessar a câmera. Verifique as permissões.",
+      cameraError:
+        "Não foi possível acessar a câmera. Verifique as permissões.",
       imageError:
         "Não foi possível ler o QR code da imagem. Tente outra imagem.",
       partialAddError:
@@ -933,8 +935,7 @@ const translations = {
       title: "Mover estoque",
       subtitle: "Mova estoque de uma localização para outra",
       sourceLocationRequired: "Localização de origem*",
-      selectSourceLocationFirst:
-        "Por favor, selecione a localização de origem",
+      selectSourceLocationFirst: "Por favor, selecione a localização de origem",
       destinationLocationRequired: "Localização de destino*",
       destinationTeamRequired: "Time de destino*",
       destinationTeamPlaceholder: "Selecione um time",
@@ -1011,8 +1012,7 @@ const translations = {
       resultsTitle: "Resultados da consulta",
       resultsEmptyHint:
         "Escaneie ou consulte um código para ver resultados aqui.",
-      noMultipleResults:
-        "Não há itens duplicados para o último código lido.",
+      noMultipleResults: "Não há itens duplicados para o último código lido.",
       openSummary: "Abrir resumo",
       summaryTitle: "Resumo do item",
       noPhoto: "Sem foto disponível",
@@ -1193,8 +1193,7 @@ const translations = {
       labelLogoTitle: "Logo da empresa para etiqueta",
       removeLabelLogo: "Remover logo",
       customFieldsTitle: "Campos customizáveis do item",
-      customFieldsSubtitle:
-        "Configure campos extras para itens e etiquetas.",
+      customFieldsSubtitle: "Configure campos extras para itens e etiquetas.",
       addCustomField: "Adicionar campo",
       noCustomFields: "Nenhum campo customizável configurado.",
       customFieldKeyPlaceholder: "Chave do campo (ex: medidor_total)",
@@ -1204,7 +1203,8 @@ const translations = {
       customFieldSchemaSaved: "Campos customizáveis atualizados com sucesso",
       customFieldRequired:
         "Todos os campos customizáveis devem ter chave e rótulo",
-      customFieldDuplicate: "As chaves dos campos customizáveis devem ser únicas",
+      customFieldDuplicate:
+        "As chaves dos campos customizáveis devem ser únicas",
       dataTitle: "Importar e exportar",
       dataSubtitle:
         "Exporte todos os dados locais em JSON ou traga itens de arquivos CSV/JSON.",
@@ -1628,8 +1628,7 @@ const translations = {
       quantityRequired: "La quantité est requise",
       quantityExceedsStock: "La quantité ne peut pas dépasser le stock actuel",
       stockMovedSuccess: "Stock déplacé avec succès",
-      stockTransferredTeamSuccess:
-        "Stock transféré entre équipes avec succès",
+      stockTransferredTeamSuccess: "Stock transféré entre équipes avec succès",
       itemFound: "Article trouvé",
       itemNotFound: "Article introuvable",
       itemAddedToList: "a été ajouté à la liste.",
@@ -1674,8 +1673,7 @@ const translations = {
       resultsTitle: "Résultats de la recherche",
       resultsEmptyHint:
         "Scannez ou recherchez un code pour voir les résultats ici.",
-      noMultipleResults:
-        "Aucun article en double pour le dernier code scanné.",
+      noMultipleResults: "Aucun article en double pour le dernier code scanné.",
       openSummary: "Ouvrir le résumé",
       summaryTitle: "Résumé de l'article",
       noPhoto: "Aucune photo disponible",
@@ -1851,7 +1849,8 @@ const translations = {
       errorSaving: "Impossible d'enregistrer les modifications",
       teamNameRequired: "Le nom de l'équipe est requis",
       labelCompanyInfoTitle: "Informations entreprise pour étiquette",
-      labelCompanyInfoDesc: "Ce texte peut apparaître sur les étiquettes imprimées.",
+      labelCompanyInfoDesc:
+        "Ce texte peut apparaître sur les étiquettes imprimées.",
       labelCompanyInfoPlaceholder: "Ex. téléphone, adresse, identifiant fiscal",
       labelLogoTitle: "Logo entreprise pour étiquette",
       removeLabelLogo: "Supprimer le logo",

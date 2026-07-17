@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Activity,
   AlertTriangle,
@@ -30,11 +30,7 @@ export function ReportsPageClient({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  useEffect(() => {
-    void fetchData();
-  }, [startDate, endDate, teamId]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
       const result = await api.getTeamReportStats(teamId, {
@@ -44,12 +40,14 @@ export function ReportsPageClient({
       if (result.ok) {
         setStats(result.data.stats);
       }
-    } catch (error) {
-      console.error("Error fetching report stats:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [teamId, startDate, endDate]);
+
+  useEffect(() => {
+    void fetchData();
+  }, [fetchData]);
 
   const formatPrice = (price: number) => {
     const locale =
@@ -117,7 +115,9 @@ export function ReportsPageClient({
           <h1 className="text-2xl sm:text-3xl font-bold text-[#1D4ED8] mb-1 sm:mb-2">
             {t.reports.title}
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">{t.reports.subtitle}</p>
+          <p className="text-sm sm:text-base text-gray-600">
+            {t.reports.subtitle}
+          </p>
         </div>
 
         <div className="mb-4 sm:mb-6 bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
@@ -249,19 +249,25 @@ export function ReportsPageClient({
                   <p className="text-2xl font-bold text-green-700">
                     {stats.transactionsByType.stock_in}
                   </p>
-                  <p className="text-sm text-green-600 mt-1">{t.reports.stockIn}</p>
+                  <p className="text-sm text-green-600 mt-1">
+                    {t.reports.stockIn}
+                  </p>
                 </div>
                 <div className="text-center p-4 bg-red-50 rounded-lg">
                   <p className="text-2xl font-bold text-red-700">
                     {stats.transactionsByType.stock_out}
                   </p>
-                  <p className="text-sm text-red-600 mt-1">{t.reports.stockOut}</p>
+                  <p className="text-sm text-red-600 mt-1">
+                    {t.reports.stockOut}
+                  </p>
                 </div>
                 <div className="text-center p-4 bg-yellow-50 rounded-lg">
                   <p className="text-2xl font-bold text-yellow-700">
                     {stats.transactionsByType.adjust}
                   </p>
-                  <p className="text-sm text-yellow-600 mt-1">{t.reports.adjust}</p>
+                  <p className="text-sm text-yellow-600 mt-1">
+                    {t.reports.adjust}
+                  </p>
                 </div>
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
                   <p className="text-2xl font-bold text-blue-700">
@@ -307,7 +313,9 @@ export function ReportsPageClient({
                                 transaction.transactionType
                               )}`}
                             >
-                              {getTransactionTypeLabel(transaction.transactionType)}
+                              {getTransactionTypeLabel(
+                                transaction.transactionType
+                              )}
                             </span>
                           </td>
                           <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-900">
@@ -322,7 +330,9 @@ export function ReportsPageClient({
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">{t.reports.noData}</p>
+                <p className="text-gray-500 text-center py-8">
+                  {t.reports.noData}
+                </p>
               )}
             </div>
 
@@ -376,7 +386,9 @@ export function ReportsPageClient({
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">{t.reports.noData}</p>
+                <p className="text-gray-500 text-center py-8">
+                  {t.reports.noData}
+                </p>
               )}
             </div>
 
@@ -405,7 +417,10 @@ export function ReportsPageClient({
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       {stats.stockByLocation.map((location, index) => (
-                        <tr key={`${location.locationId ?? "none"}-${index}`} className="hover:bg-gray-50">
+                        <tr
+                          key={`${location.locationId ?? "none"}-${index}`}
+                          className="hover:bg-gray-50"
+                        >
                           <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-900">
                             {location.locationName || t.reports.noLocation}
                           </td>
@@ -424,7 +439,9 @@ export function ReportsPageClient({
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">{t.reports.noData}</p>
+                <p className="text-gray-500 text-center py-8">
+                  {t.reports.noData}
+                </p>
               )}
             </div>
           </>

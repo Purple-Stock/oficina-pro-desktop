@@ -1,7 +1,4 @@
-import {
-  mapServiceOrderItemRow,
-  mapServiceOrderRow,
-} from "../mappers";
+import { mapServiceOrderItemRow, mapServiceOrderRow } from "../mappers";
 import type { SqlClient } from "../sql-client";
 import type {
   PaymentStatus,
@@ -46,8 +43,7 @@ async function recomputeTotals(
     `SELECT discount FROM service_orders WHERE id = ? AND team_id = ?`,
     [orderId, teamId]
   );
-  const disc =
-    discount !== undefined ? discount : Number(order?.discount ?? 0);
+  const disc = discount !== undefined ? discount : Number(order?.discount ?? 0);
   const total = Math.max(0, laborTotal + partsTotal - disc);
   await client.execute(
     `UPDATE service_orders
@@ -174,7 +170,9 @@ export async function updateServiceOrder(
   }
 
   const closing =
-    data.status === "closed" && existing.status !== "closed" && !existing.stockDebited;
+    data.status === "closed" &&
+    existing.status !== "closed" &&
+    !existing.stockDebited;
 
   if (closing) {
     sets.push("closed_at = unixepoch()");

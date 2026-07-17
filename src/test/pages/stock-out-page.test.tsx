@@ -13,21 +13,6 @@ vi.mock("@/api/desktop-api", () => ({
   createTeamStockTransaction: vi.fn(),
 }));
 
-vi.mock("@/components/BarcodeScannerModal", () => ({
-  BarcodeScannerModal: ({
-    isOpen,
-    onScan,
-  }: {
-    isOpen: boolean;
-    onScan: (barcode: string) => void;
-  }) =>
-    isOpen ? (
-      <button type="button" onClick={() => onScan("12345678")}>
-        Mock scan
-      </button>
-    ) : null,
-}));
-
 describe("TeamStockOutPage", () => {
   beforeEach(() => {
     vi.mocked(api.getTeam).mockResolvedValue({
@@ -109,12 +94,15 @@ describe("TeamStockOutPage", () => {
     });
   });
 
-  it("renders stock out page with scanner", async () => {
+  it("renders stock out page without scanner", async () => {
     render(
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/stock-out"]}>
           <Routes>
-            <Route path="/teams/:teamId/stock-out" element={<TeamStockOutPage />} />
+            <Route
+              path="/teams/:teamId/stock-out"
+              element={<TeamStockOutPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
@@ -124,28 +112,29 @@ describe("TeamStockOutPage", () => {
       await screen.findByRole("heading", { name: "Saída de estoque" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Escanear código de barras/i })
-    ).toBeInTheDocument();
+      screen.queryByRole("button", { name: /Escanear código de barras/i })
+    ).not.toBeInTheDocument();
   });
 
-  it("submits stock out after scanning item", async () => {
+  it("submits stock out after selecting item from search", async () => {
     const user = userEvent.setup();
 
     render(
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/stock-out"]}>
           <Routes>
-            <Route path="/teams/:teamId/stock-out" element={<TeamStockOutPage />} />
+            <Route
+              path="/teams/:teamId/stock-out"
+              element={<TeamStockOutPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
     );
 
     await screen.findByRole("heading", { name: "Saída de estoque" });
-    await user.click(
-      screen.getByRole("button", { name: /Escanear código de barras/i })
-    );
-    await user.click(screen.getByRole("button", { name: "Mock scan" }));
+    await user.type(screen.getByPlaceholderText(/Buscar/i), "Print");
+    await user.click(await screen.findByRole("button", { name: /Printer/i }));
     await user.click(screen.getByRole("button", { name: "Remover estoque" }));
 
     expect(api.createTeamStockTransaction).toHaveBeenCalledWith(1, {

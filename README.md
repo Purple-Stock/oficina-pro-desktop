@@ -11,8 +11,6 @@ Baseado em Tauri 2 + React 19 + TypeScript + SQLite. Dados ficam no computador, 
 - Catálogo de serviços (mão de obra)
 - Estoque de peças (entrada, saída, ajuste, transferência)
 - Baixa automática de peças ao fechar a OS
-- Scan de código de barras / QR Code
-- Etiquetas em PDF
 - Relatórios de estoque
 - Multi-oficina no mesmo PC
 
@@ -27,12 +25,12 @@ Vite: http://localhost:1420/
 
 ## Scripts
 
-| Comando | Descrição |
-| --- | --- |
-| `npm run tauri:dev` | App desktop em desenvolvimento |
-| `npm run tauri:build` | Build de produção |
-| `npm test` | Vitest + teste Rust SQLite |
-| `npm run verify` | format + lint + typecheck + tests + build |
+| Comando               | Descrição                                 |
+| --------------------- | ----------------------------------------- |
+| `npm run tauri:dev`   | App desktop em desenvolvimento            |
+| `npm run tauri:build` | Build de produção                         |
+| `npm test`            | Vitest + teste Rust SQLite                |
+| `npm run verify`      | format + lint + typecheck + tests + build |
 
 ## Dados locais
 

@@ -12,7 +12,5 @@ export function TeamStockOutPage() {
     return <div className="p-8">{t.common.loading}</div>;
   }
 
-  return (
-    <StockOutPageClient team={team} items={items} locations={locations} />
-  );
+  return <StockOutPageClient team={team} items={items} locations={locations} />;
 }

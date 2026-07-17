@@ -10,10 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formatPrice } from "@/lib/formatPrice";
-import {
-  primaryGradientButton,
-  primaryGradientIconCircle,
-} from "@/lib/styles";
+import { primaryGradientButton, primaryGradientIconCircle } from "@/lib/styles";
 import type { TeamDto, WorkshopServiceDto } from "@/services/types";
 
 export function TeamWorkshopServicesPage() {

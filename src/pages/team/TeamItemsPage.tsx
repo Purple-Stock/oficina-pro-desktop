@@ -123,7 +123,6 @@ export function TeamItemsPage() {
           items={filteredItems}
           language={language}
           labels={{
-            qrCode: t.items.qrCode,
             item: t.items.item,
             sku: t.items.sku,
             type: t.items.type,

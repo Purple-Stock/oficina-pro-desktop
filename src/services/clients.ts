@@ -69,7 +69,8 @@ export async function updateTeamClient(
       ...payload,
       name: payload.name?.trim(),
     });
-    if (!updated) return { ok: false, error: notFoundError("Client not found") };
+    if (!updated)
+      return { ok: false, error: notFoundError("Client not found") };
     return { ok: true, data: { client: updated } };
   } catch {
     return { ok: false, error: internalError("Failed to update client") };

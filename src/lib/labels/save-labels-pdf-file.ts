@@ -47,10 +47,13 @@ export async function saveLabelsPdfFile(
     };
   }
 
-  const result = await invoke<ServiceResult<SavedLabelsPdf>>("save_labels_pdf", {
-    filename,
-    data: Array.from(pdfBytes),
-  });
+  const result = await invoke<ServiceResult<SavedLabelsPdf>>(
+    "save_labels_pdf",
+    {
+      filename,
+      data: Array.from(pdfBytes),
+    }
+  );
 
   if (!result.ok) {
     throw new Error(result.error.message);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import * as api from "@/api/desktop-api";
-import { BarcodeScannerModal } from "@/components/BarcodeScannerModal";
 import { StockItemSearchPanel } from "@/components/stock/StockItemSearchPanel";
 import {
   StockOperationFeedback,
@@ -38,13 +37,13 @@ export function StockOutPageClient({
     locations.length > 0 ? locations[0].id.toString() : "";
   const [selectedLocation, setSelectedLocation] = useState(defaultLocation);
   const [itemSearch, setItemSearch] = useState("");
-  const [selectedItems, setSelectedItems] = useState<SelectedQuantityItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<SelectedQuantityItem[]>(
+    []
+  );
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const [feedback, setFeedback] = useState<StockOperationFeedbackMessage | null>(
-    null
-  );
+  const [feedback, setFeedback] =
+    useState<StockOperationFeedbackMessage | null>(null);
 
   useEffect(() => {
     if (!defaultLocation) return;
@@ -57,8 +56,8 @@ export function StockOutPageClient({
     if (!hasItemFilters) return false;
     return Boolean(
       item.name?.toLowerCase().includes(normalizedSearch) ||
-        item.sku?.toLowerCase().includes(normalizedSearch) ||
-        item.barcode?.toLowerCase().includes(normalizedSearch)
+      item.sku?.toLowerCase().includes(normalizedSearch) ||
+      item.barcode?.toLowerCase().includes(normalizedSearch)
     );
   });
 
@@ -80,24 +79,6 @@ export function StockOutPageClient({
       setSelectedItems((current) => [...current, { item, quantity: 1 }]);
     }
     setItemSearch("");
-  };
-
-  const handleBarcodeScan = (barcode: string) => {
-    const foundItem = items.find((item) => item.barcode === barcode);
-    if (foundItem) {
-      handleAddItem(foundItem);
-      showFeedback({
-        type: "success",
-        title: t.stockOut.itemFound,
-        description: `${foundItem.name || t.items.unnamedItem} ${t.stockOut.itemAddedToList}`,
-      });
-      return;
-    }
-    showFeedback({
-      type: "error",
-      title: t.stockOut.itemNotFound,
-      description: `${t.stockOut.noItemWithBarcode} ${barcode}`,
-    });
   };
 
   const handleQuantityChange = (itemId: number, quantity: number) => {
@@ -125,7 +106,10 @@ export function StockOutPageClient({
     );
   };
 
-  const totalItems = selectedItems.reduce((sum, entry) => sum + entry.quantity, 0);
+  const totalItems = selectedItems.reduce(
+    (sum, entry) => sum + entry.quantity,
+    0
+  );
 
   const handleSubmit = async () => {
     setFeedback(null);
@@ -192,7 +176,8 @@ export function StockOutPageClient({
         showFeedback({
           type: "error",
           title: t.common.error,
-          description: firstError.error.message || t.stockOut.partialRemoveError,
+          description:
+            firstError.error.message || t.stockOut.partialRemoveError,
         });
         return;
       }
@@ -230,7 +215,10 @@ export function StockOutPageClient({
       <StockOperationFeedback feedback={feedback} />
 
       <div className="mb-4 sm:mb-6">
-        <Label htmlFor="location" className="text-sm font-semibold text-gray-700 mb-2 block">
+        <Label
+          htmlFor="location"
+          className="text-sm font-semibold text-gray-700 mb-2 block"
+        >
           {t.stockOut.locationRequired}
         </Label>
         <select
@@ -251,7 +239,6 @@ export function StockOutPageClient({
         label={t.stockOut.items}
         searchPlaceholder={t.stockOut.searchItem}
         clearFilterLabel={t.common.clearFilter}
-        scanBarcodeLabel={t.stockOut.scanBarcode}
         unnamedItemLabel={t.items.unnamedItem}
         currentStockLabel={t.stockOut.currentStockLabel}
         itemSearch={itemSearch}
@@ -259,7 +246,6 @@ export function StockOutPageClient({
         hasItemFilters={hasItemFilters}
         onItemSearchChange={setItemSearch}
         onClear={() => setItemSearch("")}
-        onOpenScanner={() => setIsScannerOpen(true)}
         onAddItem={handleAddItem}
       />
 
@@ -288,7 +274,10 @@ export function StockOutPageClient({
             <tbody className="bg-white divide-y divide-gray-100">
               {selectedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm">
+                  <td
+                    colSpan={5}
+                    className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm"
+                  >
                     {t.stockOut.noItemsSelected}
                   </td>
                 </tr>
@@ -296,14 +285,19 @@ export function StockOutPageClient({
                 selectedItems.map((selectedItem) => {
                   const maxStock = selectedItem.item.currentStock ?? 0;
                   return (
-                    <tr key={selectedItem.item.id} className="hover:bg-blue-50/50 transition-colors">
+                    <tr
+                      key={selectedItem.item.id}
+                      className="hover:bg-blue-50/50 transition-colors"
+                    >
                       <td className="px-4 sm:px-6 py-4 sm:py-5">
                         <div className="text-sm font-bold text-gray-900">
                           {selectedItem.item.name || t.items.unnamedItem}
                         </div>
                       </td>
                       <td className="px-4 sm:px-6 py-4 sm:py-5 hidden sm:table-cell">
-                        <span className="text-sm font-medium text-gray-900">{maxStock}</span>
+                        <span className="text-sm font-medium text-gray-900">
+                          {maxStock}
+                        </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 sm:py-5 hidden md:table-cell">
                         <span className="text-sm font-medium text-gray-900">
@@ -374,7 +368,10 @@ export function StockOutPageClient({
       </div>
 
       <div className="mb-4 sm:mb-6">
-        <Label htmlFor="notes" className="text-sm font-semibold text-gray-700 mb-2 block">
+        <Label
+          htmlFor="notes"
+          className="text-sm font-semibold text-gray-700 mb-2 block"
+        >
           {t.stockOut.notes}
         </Label>
         <Textarea
@@ -395,19 +392,14 @@ export function StockOutPageClient({
         <Button
           type="button"
           onClick={() => void handleSubmit()}
-          disabled={isSubmitting || selectedItems.length === 0 || !selectedLocation}
+          disabled={
+            isSubmitting || selectedItems.length === 0 || !selectedLocation
+          }
           className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-lg hover:shadow-xl transition-all w-full sm:w-auto px-6 sm:px-8"
         >
           {isSubmitting ? t.common.loading : t.stockOut.removeStock}
         </Button>
       </div>
-
-      <BarcodeScannerModal
-        isOpen={isScannerOpen}
-        onClose={() => setIsScannerOpen(false)}
-        onScan={handleBarcodeScan}
-        onManualEnter={handleBarcodeScan}
-      />
     </TeamLayout>
   );
 }

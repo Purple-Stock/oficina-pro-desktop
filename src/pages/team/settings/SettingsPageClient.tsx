@@ -7,10 +7,7 @@ import { TeamLayout } from "@/components/shared/TeamLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  downloadCsv,
-  getItemsCsvTemplate,
-} from "@/lib/items/export-items-csv";
+import { downloadCsv, getItemsCsvTemplate } from "@/lib/items/export-items-csv";
 import {
   openLabelsPdfFile,
   revealLabelsPdfInDir,
@@ -24,7 +21,7 @@ import type {
 } from "@/services/types";
 import type { TeamItemCustomFieldSchemaEntry } from "@/db/types";
 
-type SettingsTab = "general" | "labels" | "customFields" | "data";
+type SettingsTab = "general" | "customFields" | "data";
 
 type CustomFieldRow = TeamItemCustomFieldSchemaEntry & { isExisting: boolean };
 
@@ -50,10 +47,6 @@ export function SettingsPageClient({
   const [activeTab, setActiveTab] = useState<SettingsTab>("general");
   const [teamName, setTeamName] = useState(team.name);
   const [notes, setNotes] = useState(team.notes ?? "");
-  const [labelCompanyInfo, setLabelCompanyInfo] = useState(
-    team.labelCompanyInfo ?? ""
-  );
-  const [labelLogoUrl, setLabelLogoUrl] = useState(team.labelLogoUrl ?? "");
   const [customFields, setCustomFields] = useState<CustomFieldRow[]>(
     (team.itemCustomFieldSchema ?? []).map((entry) => ({
       ...entry,
@@ -79,8 +72,8 @@ export function SettingsPageClient({
     () =>
       Boolean(
         csvPreview &&
-          csvPreview.summary.totalRows > 0 &&
-          csvPreview.summary.invalidRows === 0
+        csvPreview.summary.totalRows > 0 &&
+        csvPreview.summary.invalidRows === 0
       ),
     [csvPreview]
   );
@@ -114,42 +107,6 @@ export function SettingsPageClient({
     showSuccess(t.settings.changesSaved);
   };
 
-  const handleSaveLabels = async () => {
-    setIsSaving(true);
-    const result = await api.updateTeam(teamId, {
-      labelCompanyInfo: labelCompanyInfo.trim() || null,
-      labelLogoUrl: labelLogoUrl.trim() || null,
-    });
-    setIsSaving(false);
-    if (!result.ok) {
-      showFailure(result.error.message);
-      return;
-    }
-    onTeamUpdated(result.data.team);
-    showSuccess(t.settings.changesSaved);
-  };
-
-  const handleLabelLogoFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    try {
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (typeof reader.result === "string") resolve(reader.result);
-          else reject(new Error("Invalid file content"));
-        };
-        reader.onerror = () => reject(new Error("Failed to read file"));
-        reader.readAsDataURL(file);
-      });
-      setLabelLogoUrl(dataUrl);
-    } catch {
-      showFailure(t.settings.errorSaving);
-    } finally {
-      event.target.value = "";
-    }
-  };
-
   const handleSaveCustomFields = async () => {
     const normalized = customFields.map((entry) => ({
       key: entry.key.trim(),
@@ -160,7 +117,9 @@ export function SettingsPageClient({
       showFailure(t.settings.customFieldRequired);
       return;
     }
-    if (new Set(normalized.map((entry) => entry.key)).size !== normalized.length) {
+    if (
+      new Set(normalized.map((entry) => entry.key)).size !== normalized.length
+    ) {
       showFailure(t.settings.customFieldDuplicate);
       return;
     }
@@ -207,7 +166,9 @@ export function SettingsPageClient({
     showSuccess(t.settings.exportGeneralSuccess);
   };
 
-  const handleBackupFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleBackupFileChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
     setIsBackupImporting(true);
@@ -287,7 +248,6 @@ export function SettingsPageClient({
 
   const tabs: Array<{ id: SettingsTab; label: string }> = [
     { id: "general", label: t.settings.generalTab },
-    { id: "labels", label: t.settings.labelsTab },
     { id: "customFields", label: t.settings.customFieldsTab },
     { id: "data", label: t.settings.dataTab },
   ];
@@ -364,58 +324,6 @@ export function SettingsPageClient({
               <Button
                 type="button"
                 onClick={() => void handleSaveGeneral()}
-                disabled={isSaving}
-                className="w-fit bg-[#1D4ED8] hover:bg-[#2563EB]"
-              >
-                {isSaving ? t.settings.modalSaving : t.settings.saveChanges}
-              </Button>
-            </div>
-          </section>
-        ) : null}
-
-        {activeTab === "labels" ? (
-          <section className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-100 p-4 sm:p-6">
-            <h2 className="text-lg font-bold text-gray-900 mb-1">
-              {t.settings.labelCompanyInfoTitle}
-            </h2>
-            <p className="text-sm text-gray-600 mb-4">
-              {t.settings.labelCompanyInfoDesc}
-            </p>
-            <div className="grid gap-4 max-w-xl">
-              <Input
-                value={labelCompanyInfo}
-                onChange={(event) => setLabelCompanyInfo(event.target.value)}
-                placeholder={t.settings.labelCompanyInfoPlaceholder}
-              />
-              <div>
-                <p className="text-sm font-semibold text-gray-700 mb-2">
-                  {t.settings.labelLogoTitle}
-                </p>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => void handleLabelLogoFileChange(event)}
-                />
-                {labelLogoUrl ? (
-                  <div className="mt-3 flex items-center gap-3">
-                    <img
-                      src={labelLogoUrl}
-                      alt={t.settings.labelLogoTitle}
-                      className="h-16 w-16 object-contain rounded border border-gray-200 bg-white"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setLabelLogoUrl("")}
-                    >
-                      {t.settings.removeLabelLogo}
-                    </Button>
-                  </div>
-                ) : null}
-              </div>
-              <Button
-                type="button"
-                onClick={() => void handleSaveLabels()}
                 disabled={isSaving}
                 className="w-fit bg-[#1D4ED8] hover:bg-[#2563EB]"
               >
@@ -528,7 +436,9 @@ export function SettingsPageClient({
               disabled={isSaving}
               className="mt-4 bg-[#1D4ED8] hover:bg-[#2563EB]"
             >
-              {isSaving ? t.settings.modalSaving : t.settings.saveCustomFieldSchema}
+              {isSaving
+                ? t.settings.modalSaving
+                : t.settings.saveCustomFieldSchema}
             </Button>
           </section>
         ) : null}
@@ -610,7 +520,10 @@ export function SettingsPageClient({
                   type="button"
                   variant="outline"
                   onClick={() =>
-                    downloadCsv(getItemsCsvTemplate(), "items-import-template.csv")
+                    downloadCsv(
+                      getItemsCsvTemplate(),
+                      "items-import-template.csv"
+                    )
                   }
                 >
                   <Download className="h-4 w-4 mr-2" />
@@ -660,10 +573,12 @@ export function SettingsPageClient({
                     {t.settings.importCsvSummary}
                   </p>
                   <p className="text-sm text-gray-700">
-                    {t.settings.importCsvTotalRows}: {csvPreview.summary.totalRows}
+                    {t.settings.importCsvTotalRows}:{" "}
+                    {csvPreview.summary.totalRows}
                   </p>
                   <p className="text-sm text-green-700">
-                    {t.settings.importCsvValidRows}: {csvPreview.summary.validRows}
+                    {t.settings.importCsvValidRows}:{" "}
+                    {csvPreview.summary.validRows}
                   </p>
                   <p className="text-sm text-red-700">
                     {t.settings.importCsvInvalidRows}:{" "}

@@ -69,7 +69,9 @@ export function DeleteConfirmModal({
               </p>
               {itemName && !description && (
                 <div className="bg-gray-50 rounded-lg p-3 mb-4 border border-gray-200">
-                  <p className="text-gray-700 text-sm font-medium">{itemName}</p>
+                  <p className="text-gray-700 text-sm font-medium">
+                    {itemName}
+                  </p>
                 </div>
               )}
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
