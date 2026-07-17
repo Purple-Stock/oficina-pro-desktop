@@ -94,7 +94,9 @@ export function TeamServiceOrderDetailPage() {
   };
 
   const addService = async () => {
-    const service = services.find((entry) => entry.id === Number(selectedServiceId));
+    const service = services.find(
+      (entry) => entry.id === Number(selectedServiceId)
+    );
     if (!service) return;
     setError(null);
     const result = await api.addTeamServiceOrderItem(id, osId, {
@@ -237,9 +239,8 @@ export function TeamServiceOrderDetailPage() {
               <option value="">Sem veículo</option>
               {clientVehicles.map((vehicle) => (
                 <option key={vehicle.id} value={vehicle.id}>
-                  {vehicle.plate} — {[vehicle.brand, vehicle.model]
-                    .filter(Boolean)
-                    .join(" ")}
+                  {vehicle.plate} —{" "}
+                  {[vehicle.brand, vehicle.model].filter(Boolean).join(" ")}
                 </option>
               ))}
             </select>
@@ -264,7 +265,9 @@ export function TeamServiceOrderDetailPage() {
             <Textarea
               disabled={isClosed}
               value={order.complaint ?? ""}
-              onChange={(e) => setOrder({ ...order, complaint: e.target.value })}
+              onChange={(e) =>
+                setOrder({ ...order, complaint: e.target.value })
+              }
               onBlur={() => void saveHeader({ complaint: order.complaint })}
             />
           </div>
@@ -273,7 +276,9 @@ export function TeamServiceOrderDetailPage() {
             <Textarea
               disabled={isClosed}
               value={order.diagnosis ?? ""}
-              onChange={(e) => setOrder({ ...order, diagnosis: e.target.value })}
+              onChange={(e) =>
+                setOrder({ ...order, diagnosis: e.target.value })
+              }
               onBlur={() => void saveHeader({ diagnosis: order.diagnosis })}
             />
           </div>

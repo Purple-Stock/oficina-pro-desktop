@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oficina Pro — Cadastro Mercado Livre (copiar e colar)</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f1f5f9;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #64748b;
+        --accent: #1d4ed8;
+        --accent-hover: #1e40af;
+        --cta: #ea580c;
+        --cta-hover: #c2410c;
+        --border: #e2e8f0;
+        --ok: #166534;
+        --ok-bg: #dcfce7;
+        --chip: #dbeafe;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px 64px;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #ea580c);
+        color: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+
+      .header h1 {
+        margin: 0 0 8px;
+        font-size: 1.45rem;
+      }
+
+      .header p {
+        margin: 0;
+        opacity: 0.95;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .chip {
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 999px;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+
+      .card h2 {
+        margin: 0 0 6px;
+        font-size: 1.08rem;
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 0.92rem;
+        margin: 0 0 14px;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .meta span {
+        background: var(--chip);
+        color: var(--accent);
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-cta {
+        background: var(--cta);
+        color: #fff;
+      }
+
+      .btn-cta:hover {
+        background: var(--cta-hover);
+      }
+
+      .btn-secondary {
+        background: #dbeafe;
+        color: var(--accent);
+      }
+
+      .status {
+        min-height: 1.25rem;
+        font-size: 0.9rem;
+        color: var(--ok);
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .status.flash {
+        background: var(--ok-bg);
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 8px;
+      }
+
+      textarea,
+      input[type="text"] {
+        width: 100%;
+        resize: vertical;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92rem;
+        line-height: 1.55;
+        color: var(--text);
+        background: #fcfcfd;
+      }
+
+      .title-box {
+        min-height: 64px;
+      }
+
+      .short {
+        min-height: 110px;
+      }
+
+      .full {
+        min-height: 640px;
+      }
+
+      .field-box {
+        min-height: 88px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 720px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .sticky-bar {
+        position: sticky;
+        bottom: 12px;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(8px);
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      .hint {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      ol.steps {
+        margin: 0 0 0 18px;
+        padding: 0;
+        color: var(--text);
+      }
+
+      ol.steps li {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="header">
+        <h1>Oficina Pro Desktop — Cadastro no Mercado Livre</h1>
+        <p>
+          Textos prontos para copiar e colar. Sem HTML no anúncio. Use os botões
+          de copiar em cada bloco.
+        </p>
+        <div class="chips">
+          <span class="chip">Digital · pagamento único</span>
+          <span class="chip">Preço sugerido R$ 99–149</span>
+          <span class="chip">Windows · Mac · Linux</span>
+          <span class="chip">Sem mensalidade · offline</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Passo a passo no ML</h2>
+        <ol class="steps">
+          <li>
+            Vender → produto digital / software (ou Informática › Softwares).
+          </li>
+          <li>
+            Cole o <strong>título</strong>, depois a
+            <strong>descrição completa</strong>.
+          </li>
+          <li>Preencha características com o bloco de atributos.</li>
+          <li>
+            Suba as fotos de <code>docs/screenshots-ml/ml/</code> (01 a 07).
+          </li>
+          <li>
+            Preço sugerido: <strong>R$ 119,90</strong> (ou promo R$ 99,90).
+          </li>
+          <li>
+            Envio: produto digital — entrega por mensagem com link/instalador e
+            instrução.
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>1. Título do anúncio</h2>
+        <p class="note">
+          Limite do ML: cerca de 60 caracteres. Priorize palavras de busca.
+        </p>
+        <div class="meta">
+          <span id="titulo-count">0 caracteres</span>
+        </div>
+        <div class="actions">
+          <button class="btn-primary" type="button" data-copy="titulo">
+            Copiar título
+          </button>
+        </div>
+        <div class="status" data-status="titulo"></div>
+        <textarea id="titulo" class="title-box" readonly>
+Oficina Pro Desktop - Sistema Oficina Mecânica OS Estoque Offline</textarea>
+      </div>
+
+      <div class="card">
+        <h2>2. Resumo / subtítulo (opcional)</h2>
+        <p class="note">Útil na primeira linha da descrição ou em destaques.</p>
+        <div class="actions">
+          <button class="btn-primary" type="button" data-copy="resumo">
+            Copiar resumo
+          </button>
+        </div>
+        <div class="status" data-status="resumo"></div>
+        <textarea id="resumo" class="short" readonly>
+Software para oficina mecânica com ordem de serviço, clientes, veículos, peças e estoque. 100% offline, pagamento único, sem mensalidade. Windows, Mac e Linux.</textarea>
+      </div>
+
+      <div class="card">
+        <h2>3. Descrição completa</h2>
+        <p class="note">
+          Texto puro, sem emojis e sem HTML — cole no campo de descrição do ML.
+        </p>
+        <div class="actions">
+          <button class="btn-cta" type="button" data-copy="descricao">
+            Copiar descrição completa
+          </button>
+          <button class="btn-secondary" type="button" id="select-descricao">
+            Selecionar tudo
+          </button>
+        </div>
+        <div class="status" data-status="descricao"></div>
+        <textarea id="descricao" class="full" readonly>
+SISTEMA PARA OFICINA MECANICA COM ORDEM DE SERVICO, CLIENTES, VEICULOS E ESTOQUE
+
+O Oficina Pro Desktop e um software instalado no computador para gerenciar o dia a dia da sua oficina: ordens de servico, clientes, veiculos, pecas e mao de obra.
+
+Funciona 100% offline. Os dados ficam no seu computador. Nao precisa de login na nuvem e nao tem mensalidade.
+
+
+PAGAMENTO UNICO, SEM MENSALIDADES
+
+
+COMPATIVEL COM
+
+- Windows 10 e 11
+- macOS (Intel e Apple Silicon)
+- Linux (Ubuntu, Debian e derivados)
+
+
+PARA QUEM E
+
+- Oficinas mecanicas de carros e motos
+- Auto centers e pequenas retificas
+- Quem quer sair da planilha e controlar OS de verdade
+- Quem precisa de estoque de pecas com baixa automatica na OS
+
+
+O QUE VOCE CONSEGUE FAZER
+
+ORDENS DE SERVICO
+- Abrir, acompanhar e fechar OS
+- Status: aberta, em andamento, aguardando pecas, concluida, fechada
+- Reclamacao, diagnostico e km do veiculo
+- Pecas + servicos na mesma OS
+- Totais de mao de obra, pecas, desconto e valor final
+- Ao fechar a OS, o sistema baixa o estoque das pecas usadas
+
+CLIENTES E VEICULOS
+- Cadastro de clientes com telefone, e-mail e documento
+- Veiculos com placa, marca, modelo, ano, cor e odometro
+- Vinculo entre cliente e veiculo
+
+CATALOGO E ESTOQUE
+- Servicos de mao de obra com preco e tempo estimado
+- Pecas com SKU, custo, preco e estoque minimo
+- Entrada, saida, ajuste e transferencia entre locais
+- Historico de movimentacoes
+
+RELATORIOS E BACKUP
+- Indicadores de estoque
+- Exportacao de dados
+- Dados locais no seu computador
+- Varias oficinas no mesmo PC
+
+
+PRINCIPAIS VANTAGENS
+
+- Feito para oficina (nao e so um PDV generico)
+- Interface moderna e facil de usar
+- Offline de verdade
+- Sem mensalidade
+- Multiplataforma: Windows, Mac e Linux
+- Baixa de estoque automatica ao fechar a OS
+
+
+O QUE VOCE RECEBE
+
+Apos a compra, informe o sistema operacional e receba o instalador:
+
+- Windows: instalador .exe / setup
+- macOS: arquivo .dmg
+- Linux: conforme disponibilidade
+
+Inclui orientacao de instalacao e primeiros passos.
+
+
+REQUISITOS
+
+- 4 GB de RAM (recomendado 8 GB)
+- Windows 10/11 64 bits, macOS 11+, ou Linux 64 bits com interface grafica
+- Espaco em disco para instalacao
+
+
+IMPORTANTE
+
+- Sistema NAO FISCAL: nao emite NF-e / NFC-e
+- Nao envia dados para a Receita Federal
+- Ideal para controle interno da oficina e comprovantes operacionais
+
+
+PERGUNTAS FREQUENTES
+
+Tem mensalidade?
+Nao. Pagamento unico.
+
+Funciona sem internet?
+Sim. Depois de instalado, opera offline.
+
+Serve para moto tambem?
+Sim. O cadastro de veiculos e generico (placa, marca, modelo, km).
+
+Baixa estoque sozinho?
+Sim, ao fechar a OS com pecas vinculadas.
+
+Emite nota fiscal?
+Nao. E um sistema de gestao operacional, nao fiscal.
+
+Posso usar em mais de um computador?
+A licenca e de uso no equipamento. Para multiplos PCs, consulte o vendedor.
+
+
+COMECE HOJE
+
+Organize clientes, veiculos, ordens de servico e estoque em um unico sistema offline, com visual moderno e foco no chao de oficina.
+</textarea>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2>4. Preço sugerido</h2>
+          <p class="note">Ajuste conforme concorrência local no ML.</p>
+          <div class="actions">
+            <button class="btn-primary" type="button" data-copy="preco">
+              Copiar preço
+            </button>
+          </div>
+          <div class="status" data-status="preco"></div>
+          <textarea id="preco" class="field-box" readonly>119.90</textarea>
+          <p class="hint">Alternativa promo: 99.90 · Premium: 149.90</p>
+        </div>
+
+        <div class="card">
+          <h2>5. Categoria sugerida</h2>
+          <p class="note">Caminho típico no ML Brasil.</p>
+          <div class="actions">
+            <button class="btn-primary" type="button" data-copy="categoria">
+              Copiar categoria
+            </button>
+          </div>
+          <div class="status" data-status="categoria"></div>
+          <textarea id="categoria" class="field-box" readonly>
+Informática > Softwares > Software Comercial</textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>6. Características / atributos</h2>
+        <p class="note">
+          Use nos campos de características do anúncio (um item por linha).
+        </p>
+        <div class="actions">
+          <button class="btn-primary" type="button" data-copy="atributos">
+            Copiar atributos
+          </button>
+        </div>
+        <div class="status" data-status="atributos"></div>
+        <textarea
+          id="atributos"
+          class="field-box"
+          style="min-height: 220px"
+          readonly
+        >
+Formato: Digital
+Nome do software: Oficina Pro Desktop
+Versão: 0.1.0
+Sistemas operacionais: Windows, macOS, Linux
+RAM mínima: 4 GB
+Processador mínimo: 1 GHz
+Inclui guia de instalação: Sim
+Tipo: Sistema para oficina mecânica
+Módulos: Ordem de serviço, Clientes, Veículos, Peças, Serviços, Estoque
+Modelo de cobrança: Pagamento único (sem mensalidade)
+Conexão: Offline
+Fiscal: Não emite NF-e / NFC-e</textarea>
+      </div>
+
+      <div class="card">
+        <h2>7. Palavras-chave / busca</h2>
+        <p class="note">
+          Ajuda a pensar tags e título. Não cole tudo no título.
+        </p>
+        <div class="actions">
+          <button class="btn-primary" type="button" data-copy="keywords">
+            Copiar palavras-chave
+          </button>
+        </div>
+        <div class="status" data-status="keywords"></div>
+        <textarea
+          id="keywords"
+          class="field-box"
+          style="min-height: 140px"
+          readonly
+        >
+sistema oficina mecanica, software oficina, ordem de servico, os oficina, controle de estoque pecas, software auto center, programa oficina mecanica, sistema os clientes veiculos, software mecanica offline, sistema oficina sem mensalidade, programa ordem de servico, gestao oficina mecanica</textarea>
+      </div>
+
+      <div class="card">
+        <h2>8. Mensagem de entrega (pós-venda)</h2>
+        <p class="note">
+          Cole na mensagem automática ou envie após a confirmação do pagamento.
+        </p>
+        <div class="actions">
+          <button class="btn-primary" type="button" data-copy="entrega">
+            Copiar mensagem de entrega
+          </button>
+        </div>
+        <div class="status" data-status="entrega"></div>
+        <textarea
+          id="entrega"
+          class="field-box"
+          style="min-height: 200px"
+          readonly
+        >
+Ola! Obrigado pela compra do Oficina Pro Desktop.
+
+Para liberar seu acesso, me informe:
+1) Sistema operacional: Windows, Mac ou Linux
+2) E-mail para envio (se preferir fora do chat)
+
+Em ate algumas horas uteis envio o instalador e o passo a passo de instalacao.
+
+Dica: o sistema funciona offline, sem mensalidade. Seus dados ficam no seu computador.
+
+Qualquer duvida na instalacao, e so responder esta mensagem.</textarea>
+      </div>
+
+      <div class="card">
+        <h2>9. Fotos do anúncio</h2>
+        <p class="note">
+          Use as imagens em <code>docs/screenshots-ml/ml/</code> nesta ordem:
+        </p>
+        <textarea class="field-box" style="min-height: 160px" readonly>
+01-home-oficinas.jpg      → tela inicial / oficinas
+02-ordens-servico.jpg     → lista de OS
+03-clientes.jpg           → clientes
+04-veiculos.jpg           → veículos
+05-pecas.jpg              → estoque de peças
+06-servicos.jpg           → mão de obra
+07-detalhe-os.jpg         → detalhe da OS com totais</textarea>
+        <p class="hint">
+          No ML, a 1ª foto é a capa: prefira a de Ordens de Serviço ou Detalhe
+          da OS.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>10. Checklist antes de publicar</h2>
+        <ol class="steps">
+          <li>Título colado e sem caracteres estranhos.</li>
+          <li>Descrição completa colada (sem HTML).</li>
+          <li>7 fotos carregadas e na ordem boa.</li>
+          <li>Preço e frete/digital configurados.</li>
+          <li>
+            Deixar claro: <strong>não fiscal</strong>, offline, sem mensalidade.
+          </li>
+          <li>Mensagem de entrega pronta para copiar após a venda.</li>
+        </ol>
+      </div>
+
+      <div class="sticky-bar">
+        <button class="btn-cta" type="button" id="copy-pack">
+          Copiar pacote (título + descrição)
+        </button>
+        <button class="btn-primary" type="button" data-copy="titulo">
+          Copiar título
+        </button>
+        <button class="btn-secondary" type="button" data-copy="descricao">
+          Copiar descrição
+        </button>
+      </div>
+      <div
+        class="status"
+        id="status-global"
+        style="text-align: center; margin-top: 10px"
+      ></div>
+    </div>
+
+    <script>
+      function setStatus(key, message) {
+        const nodes = document.querySelectorAll(
+          key ? `[data-status="${key}"]` : "#status-global"
+        );
+        nodes.forEach((el) => {
+          el.textContent = message;
+          el.classList.add("flash");
+          setTimeout(() => {
+            el.textContent = "";
+            el.classList.remove("flash");
+          }, 1800);
+        });
+        if (key) {
+          const global = document.getElementById("status-global");
+          global.textContent = message;
+          global.classList.add("flash");
+          setTimeout(() => {
+            global.textContent = "";
+            global.classList.remove("flash");
+          }, 1800);
+        }
+      }
+
+      async function copyFromId(id, statusKey) {
+        const el = document.getElementById(id);
+        const text = el.value;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            el.focus();
+            el.select();
+            document.execCommand("copy");
+          }
+          setStatus(statusKey || id, "Copiado!");
+        } catch (err) {
+          el.focus();
+          el.select();
+          document.execCommand("copy");
+          setStatus(statusKey || id, "Copiado!");
+        }
+      }
+
+      function updateTitleCount() {
+        const titulo = document.getElementById("titulo");
+        const count = document.getElementById("titulo-count");
+        const len = titulo.value.trim().length;
+        count.textContent =
+          len +
+          " caracteres" +
+          (len > 60 ? " (acima de 60 — encurte se o ML reclamar)" : "");
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-copy");
+          void copyFromId(id, id);
+        });
+      });
+
+      document
+        .getElementById("select-descricao")
+        .addEventListener("click", () => {
+          const el = document.getElementById("descricao");
+          el.focus();
+          el.select();
+        });
+
+      document
+        .getElementById("copy-pack")
+        .addEventListener("click", async () => {
+          const titulo = document.getElementById("titulo").value.trim();
+          const descricao = document.getElementById("descricao").value.trim();
+          const pack = titulo + "\n\n" + descricao;
+          try {
+            await navigator.clipboard.writeText(pack);
+          } catch (err) {
+            const ta = document.createElement("textarea");
+            ta.value = pack;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+          }
+          setStatus(null, "Pacote título + descrição copiado!");
+        });
+
+      updateTitleCount();
+    </script>
+  </body>
+</html>

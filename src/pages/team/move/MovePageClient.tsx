@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import * as api from "@/api/desktop-api";
-import { BarcodeScannerModal } from "@/components/BarcodeScannerModal";
 import { DeleteConfirmModal } from "@/components/DeleteConfirmModal";
 import { StockItemSearchPanel } from "@/components/stock/StockItemSearchPanel";
 import {
@@ -47,17 +46,18 @@ export function MovePageClient({
   const [destinationLocation, setDestinationLocation] = useState("");
   const [destinationTeamId, setDestinationTeamId] = useState("");
   const [itemSearch, setItemSearch] = useState("");
-  const [selectedItems, setSelectedItems] = useState<SelectedQuantityItem[]>([]);
+  const [selectedItems, setSelectedItems] = useState<SelectedQuantityItem[]>(
+    []
+  );
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const [feedback, setFeedback] = useState<StockOperationFeedbackMessage | null>(
-    null
-  );
+  const [feedback, setFeedback] =
+    useState<StockOperationFeedbackMessage | null>(null);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   const hasDestinationTeams = destinationTeams.length > 0;
-  const isTeamTransferUnavailable = activeTab === "team" && !hasDestinationTeams;
+  const isTeamTransferUnavailable =
+    activeTab === "team" && !hasDestinationTeams;
   const selectedDestinationTeam =
     activeTab === "team"
       ? destinationTeams.find(
@@ -76,8 +76,8 @@ export function MovePageClient({
     if (!hasItemFilters) return false;
     return Boolean(
       item.name?.toLowerCase().includes(normalizedSearch) ||
-        item.sku?.toLowerCase().includes(normalizedSearch) ||
-        item.barcode?.toLowerCase().includes(normalizedSearch)
+      item.sku?.toLowerCase().includes(normalizedSearch) ||
+      item.barcode?.toLowerCase().includes(normalizedSearch)
     );
   });
 
@@ -99,24 +99,6 @@ export function MovePageClient({
       setSelectedItems((current) => [...current, { item, quantity: 1 }]);
     }
     setItemSearch("");
-  };
-
-  const handleBarcodeScan = (barcode: string) => {
-    const foundItem = items.find((item) => item.barcode === barcode);
-    if (foundItem) {
-      handleAddItem(foundItem);
-      showFeedback({
-        type: "success",
-        title: t.move.itemFound,
-        description: `${foundItem.name || t.items.unnamedItem} ${t.move.itemAddedToList}`,
-      });
-      return;
-    }
-    showFeedback({
-      type: "error",
-      title: t.move.itemNotFound,
-      description: `${t.move.noItemWithBarcode} ${barcode}`,
-    });
   };
 
   const handleQuantityChange = (itemId: number, quantity: number) => {
@@ -144,7 +126,10 @@ export function MovePageClient({
     );
   };
 
-  const totalItems = selectedItems.reduce((sum, entry) => sum + entry.quantity, 0);
+  const totalItems = selectedItems.reduce(
+    (sum, entry) => sum + entry.quantity,
+    0
+  );
   const totalQuantity = totalItems;
 
   const validateBeforeSubmit = (): boolean => {
@@ -286,7 +271,8 @@ export function MovePageClient({
         showFeedback({
           type: "error",
           title: t.common.error,
-          description: destItemsResult.error.message || t.move.teamTransferError,
+          description:
+            destItemsResult.error.message || t.move.teamTransferError,
         });
         return;
       }
@@ -341,7 +327,8 @@ export function MovePageClient({
         showFeedback({
           type: "error",
           title: t.common.error,
-          description: stockInResult.error.message || t.move.partialTeamTransferError,
+          description:
+            stockInResult.error.message || t.move.partialTeamTransferError,
         });
         return;
       }
@@ -510,7 +497,10 @@ export function MovePageClient({
             >
               <option value="">{t.move.destinationTeamPlaceholder}</option>
               {destinationTeams.map((destinationTeam) => (
-                <option key={destinationTeam.id} value={destinationTeam.id.toString()}>
+                <option
+                  key={destinationTeam.id}
+                  value={destinationTeam.id.toString()}
+                >
                   {destinationTeam.name}
                 </option>
               ))}
@@ -536,7 +526,6 @@ export function MovePageClient({
         label={t.move.items}
         searchPlaceholder={t.move.searchItem}
         clearFilterLabel={t.common.clearFilter}
-        scanBarcodeLabel={t.move.scanBarcode}
         unnamedItemLabel={t.items.unnamedItem}
         currentStockLabel={t.move.currentStockLabel}
         itemSearch={itemSearch}
@@ -544,7 +533,6 @@ export function MovePageClient({
         hasItemFilters={hasItemFilters}
         onItemSearchChange={setItemSearch}
         onClear={() => setItemSearch("")}
-        onOpenScanner={() => setIsScannerOpen(true)}
         onAddItem={handleAddItem}
       />
 
@@ -573,7 +561,10 @@ export function MovePageClient({
             <tbody className="bg-white divide-y divide-gray-100">
               {selectedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm">
+                  <td
+                    colSpan={5}
+                    className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm"
+                  >
                     {t.move.noItemsSelected}
                   </td>
                 </tr>
@@ -581,7 +572,10 @@ export function MovePageClient({
                 selectedItems.map((selectedItem) => {
                   const maxStock = selectedItem.item.currentStock ?? 0;
                   return (
-                    <tr key={selectedItem.item.id} className="hover:bg-blue-50/50 transition-colors">
+                    <tr
+                      key={selectedItem.item.id}
+                      className="hover:bg-blue-50/50 transition-colors"
+                    >
                       <td className="px-4 sm:px-6 py-4 sm:py-5">
                         <div className="text-sm font-bold text-gray-900">
                           {selectedItem.item.name || t.items.unnamedItem}
@@ -657,7 +651,10 @@ export function MovePageClient({
       </div>
 
       <div className="mb-4 sm:mb-6">
-        <Label htmlFor="notes" className="text-sm font-semibold text-gray-700 mb-2 block">
+        <Label
+          htmlFor="notes"
+          className="text-sm font-semibold text-gray-700 mb-2 block"
+        >
           {t.move.notes}
         </Label>
         <Textarea
@@ -701,13 +698,6 @@ export function MovePageClient({
           </Button>
         </div>
       </div>
-
-      <BarcodeScannerModal
-        isOpen={isScannerOpen}
-        onClose={() => setIsScannerOpen(false)}
-        onScan={handleBarcodeScan}
-        onManualEnter={handleBarcodeScan}
-      />
 
       <DeleteConfirmModal
         isOpen={confirmModalOpen}

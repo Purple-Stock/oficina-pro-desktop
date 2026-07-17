@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import * as api from "@/api/desktop-api";
-import { BarcodeScannerModal } from "@/components/BarcodeScannerModal";
 import { StockItemSearchPanel } from "@/components/stock/StockItemSearchPanel";
 import {
   StockOperationFeedback,
@@ -41,10 +40,8 @@ export function AdjustPageClient({
   const [selectedItems, setSelectedItems] = useState<SelectedAdjustItem[]>([]);
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const [feedback, setFeedback] = useState<StockOperationFeedbackMessage | null>(
-    null
-  );
+  const [feedback, setFeedback] =
+    useState<StockOperationFeedbackMessage | null>(null);
 
   useEffect(() => {
     if (!defaultLocation) return;
@@ -57,8 +54,8 @@ export function AdjustPageClient({
     if (!hasItemFilters) return false;
     return Boolean(
       item.name?.toLowerCase().includes(normalizedSearch) ||
-        item.sku?.toLowerCase().includes(normalizedSearch) ||
-        item.barcode?.toLowerCase().includes(normalizedSearch)
+      item.sku?.toLowerCase().includes(normalizedSearch) ||
+      item.barcode?.toLowerCase().includes(normalizedSearch)
     );
   });
 
@@ -75,24 +72,6 @@ export function AdjustPageClient({
       ]);
     }
     setItemSearch("");
-  };
-
-  const handleBarcodeScan = (barcode: string) => {
-    const foundItem = items.find((item) => item.barcode === barcode);
-    if (foundItem) {
-      handleAddItem(foundItem);
-      showFeedback({
-        type: "success",
-        title: t.adjust.itemFound,
-        description: `${foundItem.name || t.items.unnamedItem} ${t.adjust.itemAddedToList}`,
-      });
-      return;
-    }
-    showFeedback({
-      type: "error",
-      title: t.adjust.itemNotFound,
-      description: `${t.adjust.noItemWithBarcode} ${barcode}`,
-    });
   };
 
   const handleStockChange = (itemId: number, newStock: number) => {
@@ -198,7 +177,10 @@ export function AdjustPageClient({
       <StockOperationFeedback feedback={feedback} />
 
       <div className="mb-4 sm:mb-6">
-        <Label htmlFor="location" className="text-sm font-semibold text-gray-700 mb-2 block">
+        <Label
+          htmlFor="location"
+          className="text-sm font-semibold text-gray-700 mb-2 block"
+        >
           {t.adjust.locationRequired}
         </Label>
         <select
@@ -219,7 +201,6 @@ export function AdjustPageClient({
         label={t.adjust.items}
         searchPlaceholder={t.adjust.searchItem}
         clearFilterLabel={t.common.clearFilter}
-        scanBarcodeLabel={t.adjust.scanBarcode}
         unnamedItemLabel={t.items.unnamedItem}
         currentStockLabel={t.adjust.currentStockLabel}
         itemSearch={itemSearch}
@@ -227,7 +208,6 @@ export function AdjustPageClient({
         hasItemFilters={hasItemFilters}
         onItemSearchChange={setItemSearch}
         onClear={() => setItemSearch("")}
-        onOpenScanner={() => setIsScannerOpen(true)}
         onAddItem={handleAddItem}
       />
 
@@ -256,13 +236,19 @@ export function AdjustPageClient({
             <tbody className="bg-white divide-y divide-gray-100">
               {selectedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm">
+                  <td
+                    colSpan={5}
+                    className="px-4 sm:px-6 py-8 text-center text-gray-500 text-sm"
+                  >
                     {t.adjust.noItemsSelected}
                   </td>
                 </tr>
               ) : (
                 selectedItems.map((selectedItem) => (
-                  <tr key={selectedItem.item.id} className="hover:bg-blue-50/50 transition-colors">
+                  <tr
+                    key={selectedItem.item.id}
+                    className="hover:bg-blue-50/50 transition-colors"
+                  >
                     <td className="px-4 sm:px-6 py-4 sm:py-5">
                       <div className="text-sm font-bold text-gray-900">
                         {selectedItem.item.name || t.items.unnamedItem}
@@ -339,7 +325,10 @@ export function AdjustPageClient({
       </div>
 
       <div className="mb-4 sm:mb-6">
-        <Label htmlFor="notes" className="text-sm font-semibold text-gray-700 mb-2 block">
+        <Label
+          htmlFor="notes"
+          className="text-sm font-semibold text-gray-700 mb-2 block"
+        >
           {t.adjust.notes}
         </Label>
         <Textarea
@@ -356,19 +345,14 @@ export function AdjustPageClient({
         <Button
           type="button"
           onClick={() => void handleSubmit()}
-          disabled={isSubmitting || selectedItems.length === 0 || !selectedLocation}
+          disabled={
+            isSubmitting || selectedItems.length === 0 || !selectedLocation
+          }
           className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white shadow-lg hover:shadow-xl transition-all w-full sm:w-auto px-6 sm:px-8"
         >
           {isSubmitting ? t.common.loading : t.adjust.adjustStock}
         </Button>
       </div>
-
-      <BarcodeScannerModal
-        isOpen={isScannerOpen}
-        onClose={() => setIsScannerOpen(false)}
-        onScan={handleBarcodeScan}
-        onManualEnter={handleBarcodeScan}
-      />
     </TeamLayout>
   );
 }

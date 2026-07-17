@@ -8,10 +8,7 @@ import { SearchInput } from "@/components/shared/SearchInput";
 import { TeamLayout } from "@/components/shared/TeamLayout";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/formatPrice";
-import {
-  accentButton,
-  primaryGradientIconCircle,
-} from "@/lib/styles";
+import { accentButton, primaryGradientIconCircle } from "@/lib/styles";
 import type { ServiceOrderDto, TeamDto } from "@/services/types";
 
 const STATUS_LABEL: Record<string, string> = {

@@ -53,6 +53,10 @@ export function TeamReportsPage() {
   }
 
   return (
-    <ReportsPageClient teamId={Number(teamId)} team={team} initialStats={stats} />
+    <ReportsPageClient
+      teamId={Number(teamId)}
+      team={team}
+      initialStats={stats}
+    />
   );
 }

@@ -84,7 +84,10 @@ describe("TeamReportsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/reports"]}>
           <Routes>
-            <Route path="/teams/:teamId/reports" element={<TeamReportsPage />} />
+            <Route
+              path="/teams/:teamId/reports"
+              element={<TeamReportsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
@@ -108,7 +111,10 @@ describe("TeamReportsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/reports"]}>
           <Routes>
-            <Route path="/teams/:teamId/reports" element={<TeamReportsPage />} />
+            <Route
+              path="/teams/:teamId/reports"
+              element={<TeamReportsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>

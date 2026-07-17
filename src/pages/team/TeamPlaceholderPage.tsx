@@ -5,7 +5,7 @@ import * as api from "@/api/desktop-api";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { TeamLayout } from "@/components/shared/TeamLayout";
-import { purpleGradientIconCircle } from "@/lib/styles";
+import { primaryGradientIconCircle } from "@/lib/styles";
 import { useTranslation } from "@/lib/i18n";
 import type { TeamDto } from "@/services/types";
 
@@ -23,9 +23,7 @@ function getSubtitleKey(
       keyof ReturnType<typeof useTranslation>["t"]["stock"]
     >
   > = {
-    scanTitle: "scanSubtitle",
     stockByLocationTitle: "stockByLocationSubtitle",
-    labelsTitle: "labelsSubtitle",
     reportsTitle: "reportsSubtitle",
     settingsTitle: "settingsSubtitle",
   };
@@ -58,7 +56,7 @@ export function TeamPlaceholderPage({
       />
       <EmptyState
         icon={Construction}
-        iconClassName={purpleGradientIconCircle}
+        iconClassName={primaryGradientIconCircle}
         title={t.common.comingSoon}
         message={t.common.comingSoonMessage}
       />

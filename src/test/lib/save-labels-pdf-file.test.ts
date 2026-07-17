@@ -14,7 +14,8 @@ describe("save-labels-pdf-file", () => {
   it("prefers directory and file name when resolving saved pdf path", () => {
     expect(
       resolveSavedLabelsPdfPath({
-        filePath: "/Users/test/Downloads/Oficina Pro/labels-teste-2026-07-15.pdf",
+        filePath:
+          "/Users/test/Downloads/Oficina Pro/labels-teste-2026-07-15.pdf",
         fileName: "labels-teste-2026-07-15.pdf",
         directory: "/Users/test/Downloads/Oficina Pro/labels",
       })

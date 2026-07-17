@@ -1,4 +1,4 @@
-import { Search, ScanLine } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,6 @@ interface StockItemSearchPanelProps {
   label: string;
   searchPlaceholder: string;
   clearFilterLabel: string;
-  scanBarcodeLabel: string;
   unnamedItemLabel: string;
   currentStockLabel: string;
   itemSearch: string;
@@ -17,7 +16,6 @@ interface StockItemSearchPanelProps {
   hasItemFilters: boolean;
   onItemSearchChange: (value: string) => void;
   onClear: () => void;
-  onOpenScanner: () => void;
   onAddItem: (item: StockOperationItem) => void;
   showCurrentStock?: boolean;
   children?: React.ReactNode;
@@ -28,7 +26,6 @@ export function StockItemSearchPanel({
   label,
   searchPlaceholder,
   clearFilterLabel,
-  scanBarcodeLabel,
   unnamedItemLabel,
   currentStockLabel,
   itemSearch,
@@ -36,14 +33,16 @@ export function StockItemSearchPanel({
   hasItemFilters,
   onItemSearchChange,
   onClear,
-  onOpenScanner,
   onAddItem,
   showCurrentStock = true,
   children,
 }: StockItemSearchPanelProps) {
   return (
     <div className="mb-4 sm:mb-6">
-      <Label htmlFor={id} className="text-sm font-semibold text-gray-700 mb-2 block">
+      <Label
+        htmlFor={id}
+        className="text-sm font-semibold text-gray-700 mb-2 block"
+      >
         {label}
       </Label>
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -89,16 +88,6 @@ export function StockItemSearchPanel({
           className="border-gray-300 text-gray-700 hover:bg-gray-50 h-11"
         >
           {clearFilterLabel}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onOpenScanner}
-          className="border-gray-300 text-gray-700 hover:bg-gray-50 h-11"
-        >
-          <ScanLine className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">{scanBarcodeLabel}</span>
-          <span className="sm:hidden">Scan</span>
         </Button>
       </div>
       {children}

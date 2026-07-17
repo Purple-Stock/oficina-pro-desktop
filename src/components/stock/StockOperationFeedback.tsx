@@ -10,7 +10,9 @@ interface StockOperationFeedbackProps {
   feedback: StockOperationFeedbackMessage | null;
 }
 
-export function StockOperationFeedback({ feedback }: StockOperationFeedbackProps) {
+export function StockOperationFeedback({
+  feedback,
+}: StockOperationFeedbackProps) {
   if (!feedback) return null;
 
   return (

@@ -16,9 +16,7 @@ const menuLabels = [
   "Ajuste",
   "Movimentar",
   "Transações",
-  "Escanear",
   "Estoque por local",
-  "Etiquetas",
   "Relatórios",
   "Configurações",
 ];
@@ -28,7 +26,10 @@ describe("TeamLayout", () => {
     const { container } = render(
       <I18nProvider>
         <MemoryRouter>
-          <TeamLayout team={{ id: 1, name: "Oficina Centro" }} activeMenuItem="items">
+          <TeamLayout
+            team={{ id: 1, name: "Oficina Centro" }}
+            activeMenuItem="items"
+          >
             <div>Page content</div>
           </TeamLayout>
         </MemoryRouter>

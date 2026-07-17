@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  Minus,
-  PackagePlus,
-  Plus,
-  Search,
-  ScanLine,
-  Trash2,
-} from "lucide-react";
+import { Minus, PackagePlus, Plus, Search, Trash2 } from "lucide-react";
 import * as api from "@/api/desktop-api";
-import { BarcodeScannerModal } from "@/components/BarcodeScannerModal";
 import { CreateItemInlineModal } from "@/components/stock/CreateItemInlineModal";
 import { TeamLayout } from "@/components/shared/TeamLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -66,13 +58,12 @@ export function StockInPageClient({
   const [selectedLocation, setSelectedLocation] = useState(defaultLocation);
   const [availableItems, setAvailableItems] = useState<StockInItem[]>(items);
   const [itemSearch, setItemSearch] = useState("");
-  const [itemSearchSource, setItemSearchSource] = useState<"search" | "barcode">(
-    "search"
-  );
+  const [itemSearchSource, setItemSearchSource] = useState<
+    "search" | "barcode"
+  >("search");
   const [selectedItems, setSelectedItems] = useState<SelectedStockInItem[]>([]);
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [isCreateItemModalOpen, setIsCreateItemModalOpen] = useState(false);
   const [createItemInitialValues, setCreateItemInitialValues] = useState({
     name: "",
@@ -100,17 +91,14 @@ export function StockInPageClient({
     if (!hasItemFilters) return false;
     return Boolean(
       item.name?.toLowerCase().includes(normalizedSearch) ||
-        item.sku?.toLowerCase().includes(normalizedSearch) ||
-        item.barcode?.toLowerCase().includes(normalizedSearch)
+      item.sku?.toLowerCase().includes(normalizedSearch) ||
+      item.barcode?.toLowerCase().includes(normalizedSearch)
     );
   });
 
   const showCreateItemState = hasItemFilters && filteredItems.length === 0;
 
-  const openCreateItemModal = (
-    value: string,
-    source: "search" | "barcode"
-  ) => {
+  const openCreateItemModal = (value: string, source: "search" | "barcode") => {
     const trimmedValue = value.trim();
     setCreateItemInitialValues({
       name: source === "search" ? trimmedValue : "",
@@ -142,36 +130,12 @@ export function StockInPageClient({
     setItemSearchSource("search");
   };
 
-  const handleBarcodeScan = (barcode: string) => {
-    const foundItem = availableItems.find((item) => item.barcode === barcode);
-
-    if (foundItem) {
-      handleAddItem(foundItem);
-      showFeedback({
-        type: "success",
-        title: t.stockIn.itemFound,
-        description: `${foundItem.name || t.items.unnamedItem} ${t.stockIn.itemAddedToList}`,
-      });
-      return;
-    }
-
-    setItemSearchSource("barcode");
-    setItemSearch(barcode);
-    showFeedback({
-      type: "info",
-      title: t.stockIn.itemNotFound,
-      description: `${t.stockIn.noItemWithBarcode} ${barcode}. ${t.stockIn.createMissingItemHint}`,
-    });
-  };
-
   const handleCreateItemSuccess = async (item: ItemDto) => {
     const normalizedItem = normalizeItemForStockIn(item);
 
     setAvailableItems((currentItems) => {
       if (
-        currentItems.some(
-          (currentItem) => currentItem.id === normalizedItem.id
-        )
+        currentItems.some((currentItem) => currentItem.id === normalizedItem.id)
       ) {
         return currentItems;
       }
@@ -204,7 +168,10 @@ export function StockInPageClient({
     );
   };
 
-  const totalItems = selectedItems.reduce((sum, entry) => sum + entry.quantity, 0);
+  const totalItems = selectedItems.reduce(
+    (sum, entry) => sum + entry.quantity,
+    0
+  );
 
   const handleSubmit = async () => {
     setFeedback(null);
@@ -374,7 +341,9 @@ export function StockInPageClient({
                       {item.name || t.items.unnamedItem}
                     </div>
                     {item.sku ? (
-                      <div className="text-xs text-gray-500">SKU: {item.sku}</div>
+                      <div className="text-xs text-gray-500">
+                        SKU: {item.sku}
+                      </div>
                     ) : null}
                     {item.currentStock !== null ? (
                       <div className="text-xs text-gray-500">
@@ -396,16 +365,6 @@ export function StockInPageClient({
             className="border-gray-300 text-gray-700 hover:bg-gray-50 h-11"
           >
             {t.common.clearFilter}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsScannerOpen(true)}
-            className="border-gray-300 text-gray-700 hover:bg-gray-50 h-11"
-          >
-            <ScanLine className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">{t.stockIn.scanBarcode}</span>
-            <span className="sm:hidden">Scan</span>
           </Button>
         </div>
 
@@ -585,13 +544,6 @@ export function StockInPageClient({
           {isSubmitting ? t.common.loading : t.stockIn.addStock}
         </Button>
       </div>
-
-      <BarcodeScannerModal
-        isOpen={isScannerOpen}
-        onClose={() => setIsScannerOpen(false)}
-        onScan={handleBarcodeScan}
-        onManualEnter={handleBarcodeScan}
-      />
       <CreateItemInlineModal
         isOpen={isCreateItemModalOpen}
         team={team}

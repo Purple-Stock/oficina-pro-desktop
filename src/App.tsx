@@ -14,8 +14,6 @@ import { TeamSettingsPage } from "@/pages/team/TeamSettingsPage";
 import { TeamAdjustPage } from "@/pages/team/TeamAdjustPage";
 import { TeamMovePage } from "@/pages/team/TeamMovePage";
 import { TeamStockInPage } from "@/pages/team/TeamStockInPage";
-import { TeamScanPage } from "@/pages/team/TeamScanPage";
-import { TeamLabelsPage } from "@/pages/team/TeamLabelsPage";
 import { TeamStockByLocationPage } from "@/pages/team/TeamStockByLocationPage";
 import { TeamStockOutPage } from "@/pages/team/TeamStockOutPage";
 import { TeamTransactionsPage } from "@/pages/team/TeamTransactionsPage";
@@ -30,7 +28,10 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<TeamSelectionPage />} />
       <Route path="/teams/new" element={<NewTeamPage />} />
-      <Route path="/teams/:teamId/service-orders" element={<TeamServiceOrdersPage />} />
+      <Route
+        path="/teams/:teamId/service-orders"
+        element={<TeamServiceOrdersPage />}
+      />
       <Route
         path="/teams/:teamId/service-orders/:orderId"
         element={<TeamServiceOrderDetailPage />}
@@ -64,12 +65,10 @@ export function AppRoutes() {
         path="/teams/:teamId/transactions"
         element={<TeamTransactionsPage />}
       />
-      <Route path="/teams/:teamId/scan" element={<TeamScanPage />} />
       <Route
         path="/teams/:teamId/stock-by-location"
         element={<TeamStockByLocationPage />}
       />
-      <Route path="/teams/:teamId/labels" element={<TeamLabelsPage />} />
       <Route path="/teams/:teamId/reports" element={<TeamReportsPage />} />
       <Route path="/teams/:teamId/settings" element={<TeamSettingsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />

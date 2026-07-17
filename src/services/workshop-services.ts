@@ -62,10 +62,15 @@ export async function updateTeamWorkshopService(
     return { ok: false, error: validationError("Service name is required") };
   }
   try {
-    const service = await servicesRepo.updateService(client, serviceId, teamId, {
-      ...payload,
-      name: payload.name?.trim(),
-    });
+    const service = await servicesRepo.updateService(
+      client,
+      serviceId,
+      teamId,
+      {
+        ...payload,
+        name: payload.name?.trim(),
+      }
+    );
     if (!service)
       return { ok: false, error: notFoundError("Service not found") };
     return { ok: true, data: { service } };

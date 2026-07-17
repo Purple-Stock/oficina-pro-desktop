@@ -9,9 +9,10 @@ import { TeamSettingsPage } from "@/pages/team/TeamSettingsPage";
 const navigateMock = vi.fn();
 
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>(
-    "react-router-dom"
-  );
+  const actual =
+    await vi.importActual<typeof import("react-router-dom")>(
+      "react-router-dom"
+    );
   return {
     ...actual,
     useNavigate: () => navigateMock,
@@ -74,7 +75,10 @@ describe("TeamSettingsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/settings"]}>
           <Routes>
-            <Route path="/teams/:teamId/settings" element={<TeamSettingsPage />} />
+            <Route
+              path="/teams/:teamId/settings"
+              element={<TeamSettingsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
@@ -84,7 +88,9 @@ describe("TeamSettingsPage", () => {
       await screen.findByRole("heading", { name: "Configurações" })
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Geral" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Etiquetas" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Etiquetas" })
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Campos customizáveis" })
     ).toBeInTheDocument();
@@ -100,7 +106,10 @@ describe("TeamSettingsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/settings"]}>
           <Routes>
-            <Route path="/teams/:teamId/settings" element={<TeamSettingsPage />} />
+            <Route
+              path="/teams/:teamId/settings"
+              element={<TeamSettingsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
@@ -125,14 +134,19 @@ describe("TeamSettingsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/settings"]}>
           <Routes>
-            <Route path="/teams/:teamId/settings" element={<TeamSettingsPage />} />
+            <Route
+              path="/teams/:teamId/settings"
+              element={<TeamSettingsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
     );
 
     await screen.findByRole("heading", { name: "Configurações" });
-    await user.click(screen.getByRole("button", { name: "Importar e exportar" }));
+    await user.click(
+      screen.getByRole("button", { name: "Importar e exportar" })
+    );
 
     expect(
       screen.getByRole("button", { name: "Exportar JSON geral" })
@@ -150,14 +164,19 @@ describe("TeamSettingsPage", () => {
       <I18nProvider>
         <MemoryRouter initialEntries={["/teams/1/settings"]}>
           <Routes>
-            <Route path="/teams/:teamId/settings" element={<TeamSettingsPage />} />
+            <Route
+              path="/teams/:teamId/settings"
+              element={<TeamSettingsPage />}
+            />
           </Routes>
         </MemoryRouter>
       </I18nProvider>
     );
 
     await screen.findByRole("heading", { name: "Configurações" });
-    await user.click(screen.getByRole("button", { name: "Importar e exportar" }));
+    await user.click(
+      screen.getByRole("button", { name: "Importar e exportar" })
+    );
     await user.click(screen.getByRole("button", { name: "Excluir tudo" }));
 
     expect(
@@ -166,7 +185,9 @@ describe("TeamSettingsPage", () => {
       )
     ).toBeInTheDocument();
 
-    const confirmButtons = screen.getAllByRole("button", { name: "Excluir tudo" });
+    const confirmButtons = screen.getAllByRole("button", {
+      name: "Excluir tudo",
+    });
     await user.click(confirmButtons[confirmButtons.length - 1]);
 
     expect(api.deleteAllData).toHaveBeenCalledTimes(1);

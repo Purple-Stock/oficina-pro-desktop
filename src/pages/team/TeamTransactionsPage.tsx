@@ -116,7 +116,10 @@ export function TeamTransactionsPage() {
                       </span>
                     </td>
                     <td className="px-6 py-5 text-sm font-bold text-gray-900">
-                      {formatTransactionQuantity(tx.quantity, tx.transactionType)}
+                      {formatTransactionQuantity(
+                        tx.quantity,
+                        tx.transactionType
+                      )}
                     </td>
                     <td className="px-6 py-5 text-sm text-gray-600">
                       {tx.notes || "—"}

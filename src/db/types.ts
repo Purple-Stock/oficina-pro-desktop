@@ -69,12 +69,7 @@ export type StockTransaction = {
 };
 
 export type ServiceOrderStatus =
-  | "open"
-  | "in_progress"
-  | "waiting_parts"
-  | "done"
-  | "closed"
-  | "cancelled";
+  "open" | "in_progress" | "waiting_parts" | "done" | "closed" | "cancelled";
 
 export type PaymentStatus = "pending" | "partial" | "paid";
 

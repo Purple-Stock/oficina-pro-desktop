@@ -3,10 +3,7 @@ import { useParams } from "react-router-dom";
 import * as api from "@/api/desktop-api";
 import { useTranslation } from "@/lib/i18n";
 import { StockInPageClient } from "@/pages/team/stock-in/StockInPageClient";
-import type {
-  StockInItem,
-  StockInLocation,
-} from "@/pages/team/stock-in/types";
+import type { StockInItem, StockInLocation } from "@/pages/team/stock-in/types";
 import type { TeamDto } from "@/services/types";
 
 export function TeamStockInPage() {
